@@ -1,0 +1,32 @@
+{
+  "name": "proyectointegrador",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/server.ts",
+    "build": "tsc --outDir ./dist",
+    "serve": "node dist/server.js",
+    "start:dev": "ts-node-dev --respawn src/server.ts",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PedroPortillo0/proyecointegrador9no.git"
+  },
+  "author": "pedro portillo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PedroPortillo0/proyecointegrador9no/issues"
+  },
+  "homepage": "https://github.com/PedroPortillo0/proyecointegrador9no#readme",
+  "keywords": [],
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^4.16.1",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
