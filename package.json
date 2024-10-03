@@ -22,30 +22,7 @@
   "keywords": [],
   "description": "",
   "devDependencies": {
-<<<<<<< HEAD
-    "@types/express": "^4.17.21",
-=======
-    "@types/bcryptjs": "^2.4.6",
-    "@types/express": "^4.17.21",
-    "@types/jsonwebtoken": "^9.0.7",
-    "@types/uuid": "^10.0.0",
->>>>>>> 3068337 ([CREATE]user)
-    "tslint": "^5.12.1",
-    "typescript": "^3.3.3"
-  },
-  "dependencies": {
-    "axios": "^1.7.7",
-<<<<<<< HEAD
-    "dotenv": "^16.4.5",
-    "express": "^4.21.0",
-    "twilio": "^5.3.3"
-=======
-    "bcryptjs": "^2.4.3",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.0",
-    "jsonwebtoken": "^9.0.2",
-    "twilio": "^5.3.3",
-    "uuid": "^10.0.0"
->>>>>>> 3068337 ([CREATE]user)
+    "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.7"
   }
 }

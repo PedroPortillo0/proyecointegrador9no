@@ -1,20 +1,23 @@
 import express from 'express';
-import paymentRoutes from '././payment/intraestruture/routes/paymentRoutes';
+import userRoutes from './usuario/infraestrucure//routes/userRoutes';
 import dotenv from 'dotenv';
+import { sequelize } from './usuario/infraestrucure/database';
 
-// Cargar las variables de entorno
 dotenv.config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// Middleware para procesar JSON
 app.use(express.json());
 
-// Configurar las rutas de la aplicación
-app.use('/api', paymentRoutes);
+// Conectar a la base de datos
+sequelize.sync().then(() => {
+    console.log('Database connected');
+});
 
-// Inicializar el servidor
+// Registrar las rutas
+app.use('/api', userRoutes);
+
 app.listen(port, () => {
-    console.log(`Servidor corriendo en http://localhost:${port}`);
+    console.log(`Server is running on port ${port}`);
 });
