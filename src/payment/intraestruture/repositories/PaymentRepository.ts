@@ -1,4 +1,4 @@
-import { Payment } from '../../../domain/models/Payment';
+import { Payment } from '../../domain/models/Payment';
 
 export class PaymentRepository {
     async save(payment: Payment): Promise<void> {

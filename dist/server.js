@@ -22,20 +22,22 @@ const clientId = 'ATrBdypYtXF6qu9yfNfUQRlZXTHz_YxA7EQKNFnQ_Nd4HYEXmb7I7jKtM6azS6
 const clientSecret = 'EB1zKNVCeY6ASNzkcm2TeKKUjAqLeJqoYIPSqmZf6Obn8JGTAFvjpDE0fzN5rfh23ZzzSY8eG3PxDHW8';
 const paymentProcessor = new PayPalAPI_1.PayPalAPI(clientId, clientSecret);
 const paymentService = new PaymentService_1.PaymentService(paymentProcessor);
+// Middleware para procesar JSON
 app.use(express_1.default.json());
-// Ruta para realizar el pago
-app.post('/payment', (req, res) => __awaiter(this, void 0, void 0, function* () {
-    const { id, amount, currency, userId } = req.body;
-    if (!id || !amount || !currency || !userId) {
+// Endpoint para realizar un pago
+app.post('/api/v1/payment', (req, res) => __awaiter(this, void 0, void 0, function* () {
+    const { amount, currency, userId } = req.body;
+    // Validar los parámetros de la solicitud
+    if (!amount || !currency || !userId) {
         return res.status(400).json({ error: 'Faltan parámetros en la solicitud.' });
     }
-    const payment = new Payment_1.Payment(id, amount, currency, 'pending', userId);
+    const payment = new Payment_1.Payment('1', amount, currency, 'pending', userId);
     try {
         const paymentId = yield paymentService.executePayment(payment);
         return res.status(200).json({ paymentId, message: 'Pago exitoso' });
     }
     catch (error) {
-        return res.status(500).json({ error: 'Fallo en el procesamiento del pago' });
+        return res.status(500).json({ error: 'Error en el procesamiento del pago', details: error });
     }
 }));
 // Inicializar el servidor
