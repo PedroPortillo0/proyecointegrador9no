@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { AuthService } from '../../aplication/services/AuthService';
 import { UserService } from '../../aplication/services/UserService';
 import { UserRepository } from '../repositories/UserRepository';
-import { sendWhatsAppMessageUseCase } from '../../../WhatsApp/infrestructure/dependencies/dependencies'; // Importar el caso de uso de WhatsApp
+import { sendWhatsAppMessageUseCase } from '../../../WhatsApp/infrestructure/dependencies/dependencies'; 
 
 const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
@@ -12,10 +12,9 @@ export class UserController {
     public async createUser(req: Request, res: Response): Promise<Response> {
         const { name, email, password, phoneNumber } = req.body;
         try {
-            // Registrar al usuario
+
             const user = await userService.registerUser(name, email, password, phoneNumber);
 
-            // Enviar mensaje de bienvenida por WhatsApp
             if (phoneNumber) {
                 try {
                     await sendWhatsAppMessageUseCase.run(phoneNumber, '¡Bienvenido a la familia faunora! Nos alegra tenerte con nosotros.');
@@ -32,8 +31,6 @@ export class UserController {
             return res.status(400).json({ message: 'An unknown error occurred' });
         }
     }
-
-    // Resto de los métodos del controlador...
 
     public async loginUser(req: Request, res: Response): Promise<Response> {
         const { email, password } = req.body;
