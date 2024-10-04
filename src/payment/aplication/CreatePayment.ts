@@ -36,10 +36,8 @@ interface MercadoPagoPreference {
   external_reference: string;
 }
 
-// Función para crear una preferencia de pago
 export const createPayment = async (items: Item[], email: string) => {
   const preferenceItems = items.map((item) => {
-    // Especificar el tipo de `product`
     const product: Product | undefined = PRODUCTS[item.product_id];
     if (!product) {
       throw new Error(`Product with ID ${item.product_id} does not exist`);
@@ -80,7 +78,6 @@ export const createPayment = async (items: Item[], email: string) => {
   }
 };
 
-// Función para obtener el estado de un pago
 export const getPaymentStatus = async (paymentId: string) => {
   const client = mercadoPagoClient.getClient();
   try {
