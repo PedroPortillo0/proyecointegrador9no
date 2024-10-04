@@ -32,6 +32,6 @@ export const UserModel = sequelize.define('User', {
         allowNull: false,
     },
 }, {
-    tableName: 'users', // Opcional: Define el nombre de la tabla en la base de datos
-    timestamps: false,  // Opcional: si no necesitas `createdAt` y `updatedAt`
+    tableName: 'users', 
+    timestamps: false, 
 });
