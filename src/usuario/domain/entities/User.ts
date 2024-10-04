@@ -2,7 +2,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 export class User {
     constructor(
-        public readonly id: string = uuidv4(), // Genera un UUID automáticamente si no se proporciona uno
+        public id: number | null = null,   // Ajuste para incluir el campo `id` (autoincremental)
+        public uuid: string = uuidv4(),    // Campo `uuid`
         public name: string,
         public email: string,
         public password: string,

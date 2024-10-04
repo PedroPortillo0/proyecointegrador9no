@@ -1,23 +1,21 @@
 import express from 'express';
-import userRoutes from './usuario/infraestrucure//routes/userRoutes';
 import dotenv from 'dotenv';
-import { sequelize } from './usuario/infraestrucure/database';
+import { connectToDatabase } from './usuario/infraestrucure/database'; // Importa la configuración de la base de datos
+import { userRoutes } from './usuario/infraestrucure/routes/userRoutes';
 
+// Cargar las variables de entorno desde el archivo .env
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000; // Usar el puerto definido en .env o el 3000 por defecto
 
 app.use(express.json());
+app.use('/api/v1/', userRoutes); // Configura tus rutas de usuarios
 
-// Conectar a la base de datos
-sequelize.sync().then(() => {
-    console.log('Database connected');
-});
-
-// Registrar las rutas
-app.use('/api', userRoutes);
-
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+// Iniciar la conexión con la base de datos y el servidor
+(async () => {
+    await connectToDatabase(); // Conectar y sincronizar la base de datos
+    app.listen(PORT, () => {
+        console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    });
+})();

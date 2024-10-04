@@ -9,7 +9,7 @@ export class UserService implements IUserService {
 
     public async registerUser(name: string, email: string, password: string, phoneNumber: string): Promise<User> {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User(uuidv4(), name, email, hashedPassword, phoneNumber);
+        const user = new User(null, uuidv4(), name, email, hashedPassword, phoneNumber);
         
         if (!user.validateEmail()) {
             throw new Error('Invalid email format');

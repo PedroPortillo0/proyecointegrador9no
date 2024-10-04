@@ -2,13 +2,13 @@ import { Router } from 'express';
 import { UserController } from '../controllers/UserController';
 import { authMiddleware } from '../middleware/authMiddleware';
 
-const router = Router();
+const userRoutes  = Router();
 const userController = new UserController();
 
-router.post('/users', userController.createUser);
-router.post('/users/login', userController.loginUser);
-router.get('/users/:id', authMiddleware, userController.getUserById);
-router.put('/users/:id', authMiddleware, userController.updateUser);
-router.delete('/users/:id', authMiddleware, userController.deleteUser);
+userRoutes .post('/users', userController.createUser);
+userRoutes .post('/users/login', userController.loginUser);
+userRoutes .get('/users/:id', authMiddleware, userController.getUserById);
+userRoutes .put('/users/:id', authMiddleware, userController.updateUser);
+userRoutes .delete('/users/:id', authMiddleware, userController.deleteUser);
 
-export default router;
+export { userRoutes} ;
