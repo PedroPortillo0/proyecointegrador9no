@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 
 export class UserService implements IUserService {
+
     constructor(private userRepository: IUserRepository) {}
 
     public async registerUser(name: string, email: string, password: string, phoneNumber: string): Promise<User> {
@@ -14,8 +15,9 @@ export class UserService implements IUserService {
         if (!user.validateEmail()) {
             throw new Error('Invalid email format');
         }
-        
-        return await this.userRepository.create(user);
+        const newUser = await this.userRepository.create(user);
+    
+        return newUser;
     }
 
     public async getUserByUuid(uuid: string): Promise<User | null> {
