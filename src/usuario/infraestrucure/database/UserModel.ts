@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../database'; // Importa la instancia de la conexión a la base de datos
+import { sequelize } from '../database'; 
 
 export const UserModel = sequelize.define('User', {
     id: {
@@ -10,7 +10,7 @@ export const UserModel = sequelize.define('User', {
     },
     uuid: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4, // Genera automáticamente un UUID
+        defaultValue: DataTypes.UUIDV4, 
         unique: true,
         allowNull: false,
     },

@@ -18,12 +18,12 @@ export class UserService implements IUserService {
         return await this.userRepository.create(user);
     }
 
-    public async getUserById(id: string): Promise<User | null> {
-        return await this.userRepository.findById(id);
+    public async getUserByUuid(uuid: string): Promise<User | null> {
+        return await this.userRepository.findByUuid(uuid);
     }
 
-    public async updateUser(id: string, name: string, email: string, phoneNumber: string): Promise<User> {
-        const user = await this.userRepository.findById(id);
+    public async updateUser(uuid: string, name: string, email: string, phoneNumber: string): Promise<User> {
+        const user = await this.userRepository.findByUuid(uuid);
         if (!user) throw new Error('User not found');
         
         user.name = name;
@@ -33,7 +33,11 @@ export class UserService implements IUserService {
         return await this.userRepository.update(user);
     }
 
-    public async deleteUser(id: string): Promise<void> {
-        await this.userRepository.delete(id);
+    public async deleteUser(uuid: string): Promise<void> {
+        await this.userRepository.delete(uuid);
+    }
+
+    public async findAllUsers(page: number, limit: number): Promise<{ users: User[], total: number }> {
+        return await this.userRepository.findAll(page, limit);
     }
 }

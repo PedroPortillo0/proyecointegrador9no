@@ -34,27 +34,26 @@ export class UserController {
         }
     }
 
-    public async getUserById(req: Request, res: Response): Promise<Response> {
-        const { id } = req.params;
+    public async getUserByUuid(req: Request, res: Response): Promise<Response> {
         try {
-            const user = await userService.getUserById(id);
+            const uuid = req.params.uuid;
+            const user = await userService.getUserByUuid(uuid);
+    
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
             }
+    
             return res.json(user);
         } catch (error) {
-            if (error instanceof Error) {
-                return res.status(400).json({ message: error.message });
-            }
-            return res.status(400).json({ message: 'An unknown error occurred' });
+            return res.status(500).json({ message: 'Server error' });
         }
     }
 
     public async updateUser(req: Request, res: Response): Promise<Response> {
-        const { id } = req.params;
+        const { uuid } = req.params;
         const { name, email, phoneNumber } = req.body;
         try {
-            const updatedUser = await userService.updateUser(id, name, email, phoneNumber);
+            const updatedUser = await userService.updateUser(uuid, name, email, phoneNumber);
             return res.json(updatedUser);
         } catch (error) {
             if (error instanceof Error) {
@@ -65,15 +64,27 @@ export class UserController {
     }
 
     public async deleteUser(req: Request, res: Response): Promise<Response> {
-        const { id } = req.params;
+        const { uuid } = req.params; 
         try {
-            await userService.deleteUser(id);
+            await userService.deleteUser(uuid);
             return res.status(204).send();
         } catch (error) {
             if (error instanceof Error) {
                 return res.status(400).json({ message: error.message });
             }
             return res.status(400).json({ message: 'An unknown error occurred' });
+        }
+    }
+
+    public async getAllUsers(req: Request, res: Response): Promise<Response> {
+        try {
+            const page = parseInt(req.query.page as string) || 1;
+            const limit = parseInt(req.query.limit as string) || 4;
+
+            const { users, total } = await userService.findAllUsers(page, limit);
+            return res.json({ users, total });
+        } catch (error) {
+            return res.status(500).json({ message: 'Server error' });
         }
     }
 }

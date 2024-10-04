@@ -7,8 +7,9 @@ const userController = new UserController();
 
 userRoutes .post('/users', userController.createUser);
 userRoutes .post('/users/login', userController.loginUser);
-userRoutes .get('/users/:id', authMiddleware, userController.getUserById);
-userRoutes .put('/users/:id', authMiddleware, userController.updateUser);
-userRoutes .delete('/users/:id', authMiddleware, userController.deleteUser);
+userRoutes .get('/users/:uuid', authMiddleware, userController.getUserByUuid);
+userRoutes .put('/users/:uuid', authMiddleware, userController.updateUser);
+userRoutes .delete('/users/:uuid', authMiddleware, userController.deleteUser);
+userRoutes.get('/users', userController.getAllUsers);
 
 export { userRoutes} ;
