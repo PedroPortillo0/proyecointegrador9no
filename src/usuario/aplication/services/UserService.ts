@@ -22,13 +22,22 @@ export class UserService implements IUserService {
         return await this.userRepository.findByUuid(uuid);
     }
 
-    public async updateUser(uuid: string, name: string, email: string, phoneNumber: string): Promise<User> {
+    public async updateUser(uuid: string, updateData: { name?: string; email?: string; password?: string; phoneNumber?: string }): Promise<User> {
         const user = await this.userRepository.findByUuid(uuid);
         if (!user) throw new Error('User not found');
         
-        user.name = name;
-        user.email = email;
-        user.phoneNumber = phoneNumber;
+        if (updateData.name) user.name = updateData.name;
+        if (updateData.email) {
+            user.email = updateData.email;
+            if (!user.validateEmail()) {
+                throw new Error('Invalid email format');
+            }
+        }
+        if (updateData.password) {
+            const hashedPassword = await bcrypt.hash(updateData.password, 10);
+            user.password = hashedPassword;
+        }
+        if (updateData.phoneNumber) user.phoneNumber = updateData.phoneNumber;
         
         return await this.userRepository.update(user);
     }

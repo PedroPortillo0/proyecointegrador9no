@@ -51,9 +51,10 @@ export class UserController {
 
     public async updateUser(req: Request, res: Response): Promise<Response> {
         const { uuid } = req.params;
-        const { name, email, phoneNumber } = req.body;
+        const { name, email, password, phoneNumber } = req.body;
+    
         try {
-            const updatedUser = await userService.updateUser(uuid, name, email, phoneNumber);
+            const updatedUser = await userService.updateUser(uuid, { name, email, password, phoneNumber });
             return res.json(updatedUser);
         } catch (error) {
             if (error instanceof Error) {
@@ -62,6 +63,7 @@ export class UserController {
             return res.status(400).json({ message: 'An unknown error occurred' });
         }
     }
+
 
     public async deleteUser(req: Request, res: Response): Promise<Response> {
         const { uuid } = req.params; 

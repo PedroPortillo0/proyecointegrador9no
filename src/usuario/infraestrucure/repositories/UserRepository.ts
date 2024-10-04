@@ -80,11 +80,12 @@ export class UserRepository implements IUserRepository {
             {
                 name: user.name,
                 email: user.email,
+                password: user.password,
                 phoneNumber: user.phoneNumber,
             },
             { where: { uuid: user.uuid } }
         );
-
+    
         return user;
     }
 
