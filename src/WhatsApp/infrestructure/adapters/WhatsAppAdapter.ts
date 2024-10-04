@@ -27,28 +27,17 @@ export class WhatsAppAdapter implements WhatsAppRepository {
         if (!this.isReady) {
             throw new Error('WhatsApp Web no está listo. Intenta de nuevo más tarde.');
         }
-
         try {
-            // Limpiar y formatear el número de teléfono
-            const cleanNumber = to.replace(/[^\d]/g, ''); // Remueve caracteres no numéricos
-
-            // Verificar si el número ya incluye el código de país (en este caso, "52" para México)
+            const cleanNumber = to.replace(/[^\d]/g, ''); 
             let formattedNumber = cleanNumber;
-            if (!cleanNumber.startsWith('52')) { // Suponiendo que 52 es el código de país para México
+            if (!cleanNumber.startsWith('52')) { 
                 formattedNumber = `52${cleanNumber}`;
             }
-
-            // Añadir el sufijo "@c.us" necesario para enviar un mensaje en WhatsApp
             const whatsappNumber = `${formattedNumber}@c.us`;
-
-            // Verificar si el número existe en WhatsApp antes de enviar el mensaje
             const contact = await this.client.getNumberId(whatsappNumber); 
-
             if (!contact) {
                 throw new Error(`El número ${whatsappNumber} no está registrado en WhatsApp.`);
             }
-
-            // Enviar el mensaje
             await this.client.sendMessage(contact._serialized, message);
             console.log('Mensaje enviado correctamente a:', whatsappNumber);
         } catch (error) {
