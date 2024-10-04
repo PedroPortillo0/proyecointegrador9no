@@ -1,7 +1,6 @@
 import mercadoPagoClient from '../infraestructure/mercadoPago/MercadoPagoClient';
 import { v4 as uuidv4 } from 'uuid';
 
-// Interfaz para definir la estructura de los productos
 interface Product {
   id: number;
   title: string;
@@ -9,11 +8,8 @@ interface Product {
   unit_price: number;
 }
 
-// Productos de ejemplo
 const PRODUCTS: { [key: number]: Product } = {
-  1: { id: 1, title: 'Premium Product', description: 'High-end product', unit_price: 1000 },
-  2: { id: 2, title: 'Standard Product', description: 'Mid-range product', unit_price: 500 },
-  3: { id: 3, title: 'Basic Product', description: 'Economical product', unit_price: 200 },
+  1: { id: 1, title: 'Premium Product', description: 'High-end product', unit_price: 50 }
 };
 
 interface Item {

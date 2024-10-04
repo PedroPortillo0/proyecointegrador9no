@@ -1,9 +1,8 @@
 import express, { Request, Response } from 'express';
-import { createPayment, getPaymentStatus } from '../aplication/CreatePayment'; // Corregido: "application" con dos 'p'
+import { createPayment, getPaymentStatus } from '../aplication/CreatePayment'; 
 
 const router = express.Router();
 
-// Ruta para crear una preferencia de pago
 router.post('/create-payment', async (req: Request, res: Response) => {
   try {
     const { items, email } = req.body;
@@ -15,7 +14,6 @@ router.post('/create-payment', async (req: Request, res: Response) => {
   }
 });
 
-// Ruta para obtener el estado de un pago
 router.get('/payment-status/:id', async (req: Request, res: Response) => {
   try {
     const paymentId = req.params.id;
