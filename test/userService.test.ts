@@ -41,7 +41,6 @@ const mockUserRepository: IUserRepository = {
     })
 };
 
-// Prueba unitaria
 describe('UserService', () => {
     it('should create a user', async () => {
         const userService = new UserService(mockUserRepository);
