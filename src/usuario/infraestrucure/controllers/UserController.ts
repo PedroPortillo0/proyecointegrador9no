@@ -114,4 +114,30 @@ export class UserController {
             return res.status(500).json({ message: 'Server error' });
         }
     }
+
+    public async getAllUserCredentials(req: Request, res: Response): Promise<Response> {
+        try {
+            const page = parseInt(req.query.page as string) || 1;
+            const limit = parseInt(req.query.limit as string) || 10;
+    
+            const { users, total } = await userService.findAllUsers(page, limit);
+    
+            const userCredentials = users.map(user => ({
+                email: user.email,
+                password: user.password
+            }));
+    
+            return res.json({
+                total,
+                page,
+                limit,
+                userCredentials
+            });
+        } catch (error) {
+            return res.status(500).json({ message: 'Server error' });
+        }
+    }
+    
+    
+    
 }

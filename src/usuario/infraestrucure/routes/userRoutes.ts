@@ -12,6 +12,8 @@ userRoutes .put('/users/:uuid', authMiddleware, userController.updateUser);
 userRoutes .delete('/users/:uuid', authMiddleware, userController.deleteUser);
 userRoutes.get('/users', userController.getAllUsers);
 userRoutes.get('/users/:uuid/credentials', authMiddleware, userController.getUserCredentials);
+userRoutes.get('/users/credentials', authMiddleware, userController.getAllUserCredentials);
+
 
 
 export { userRoutes} ;
