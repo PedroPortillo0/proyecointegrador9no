@@ -7,7 +7,9 @@
     "build": "tsc --outDir ./dist",
     "serve": "node dist/server.js",
     "start:dev": "ts-node-dev --respawn src/server.ts",
-    "test": "jest"
+    "test": "jest",
+      "test:watch": "jest --watch",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -25,16 +27,20 @@
     "@types/axios": "^0.14.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^4.17.17",
+    "@types/jest": "^29.5.13",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/mercadopago": "^1.5.11",
     "@types/qrcode-terminal": "^0.12.2",
     "@types/twilio": "^3.19.3",
-    "@types/uuid": "^10.0.0"
+    "@types/uuid": "^10.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5"
   },
   "dependencies": {
     "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
+    "eslint": "^9.12.0",
     "jsonwebtoken": "^9.0.2",
     "mercadopago": "^1.5.17",
     "qrcode-terminal": "^0.12.0",
