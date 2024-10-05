@@ -99,4 +99,19 @@ export class UserController {
             return res.status(500).json({ message: 'Server error' });
         }
     }
+
+    public async getUserCredentials(req: Request, res: Response): Promise<Response> {
+        try {
+            const uuid = req.params.uuid;
+            const user = await userService.getUserByUuid(uuid);
+    
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+    
+            return res.json({ email: user.email, password: user.password });
+        } catch (error) {
+            return res.status(500).json({ message: 'Server error' });
+        }
+    }
 }
