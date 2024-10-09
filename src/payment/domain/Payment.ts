@@ -1,7 +1,11 @@
-export interface Payment {
-  id: string;
-  status: string;
-  amount: number;
-  email: string;
-  external_reference: string;
+export interface Product {
+  id: number;
+  title: string;
+  description: string;
+  unit_price: number;
+}
+
+export interface Item {
+  product_id: number;
+  quantity?: number;
 }
