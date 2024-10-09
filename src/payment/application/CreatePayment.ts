@@ -1,21 +1,11 @@
 import { PaymentRepository } from '../domain/PaymentRepository';
+import { Product, Item } from '../domain/Payment';
+import { CreatePaymentData } from '../domain/CreatePaymentData';
 import { v4 as uuidv4 } from 'uuid';
-
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  unit_price: number;
-}
 
 const PRODUCTS: { [key: number]: Product } = {
   1: { id: 1, title: 'Premium Product', description: 'High-end product', unit_price: 50 }
 };
-
-interface Item {
-  product_id: number;
-  quantity?: number;
-}
 
 export class CreatePayment {
   constructor(private paymentRepository: PaymentRepository) {}
@@ -35,7 +25,7 @@ export class CreatePayment {
     });
 
     const order_id = uuidv4();
-    const paymentData = {
+    const paymentData: CreatePaymentData = {
       items: preferenceItems,
       payer: { email },
       back_urls: {
