@@ -1,4 +1,4 @@
-import mercadoPagoClient from '../infraestructure/mercadoPago/MercadoPagoClient';
+import { PaymentRepository } from '../domain/PaymentRepository';
 import { v4 as uuidv4 } from 'uuid';
 
 interface Product {
@@ -17,73 +17,36 @@ interface Item {
   quantity?: number;
 }
 
-interface MercadoPagoPreference {
-  items: Array<{
-    title: string;
-    description: string;
-    unit_price: number;
-    quantity: number;
-  }>;
-  payer: {
-    email: string;
-  };
-  back_urls: {
-    success: string;
-    failure: string;
-    pending: string;
-  };
-  auto_return: 'approved' | 'all';
-  external_reference: string;
-}
+export class CreatePayment {
+  constructor(private paymentRepository: PaymentRepository) {}
 
-export const createPayment = async (items: Item[], email: string) => {
-  const preferenceItems = items.map((item) => {
-    const product: Product | undefined = PRODUCTS[item.product_id];
-    if (!product) {
-      throw new Error(`Product with ID ${item.product_id} does not exist`);
-    }
-    return {
-      title: product.title,
-      description: product.description,
-      unit_price: product.unit_price,
-      quantity: item.quantity || 1,
-    };
-  });
+  async execute(items: Item[], email: string) {
+    const preferenceItems = items.map((item) => {
+      const product: Product | undefined = PRODUCTS[item.product_id];
+      if (!product) {
+        throw new Error(`Product with ID ${item.product_id} does not exist`);
+      }
+      return {
+        title: product.title,
+        description: product.description,
+        unit_price: product.unit_price,
+        quantity: item.quantity || 1,
+      };
+    });
 
-  const order_id = uuidv4();
-
-  const preferenceData: MercadoPagoPreference = {
-    items: preferenceItems,
-    payer: { email },
-    back_urls: {
-      success: 'https://tu-sitio.com/success',
-      failure: 'https://tu-sitio.com/failure',
-      pending: 'https://tu-sitio.com/pending',
-    },
-    auto_return: 'approved',
-    external_reference: order_id,
-  };
-
-  const client = mercadoPagoClient.getClient();
-
-  try {
-    const response = await client.preferences.create(preferenceData);
-    return {
-      id: response.body.id,
-      init_point: response.body.init_point,
+    const order_id = uuidv4();
+    const paymentData = {
+      items: preferenceItems,
+      payer: { email },
+      back_urls: {
+        success: 'https://tu-sitio.com/success',
+        failure: 'https://tu-sitio.com/failure',
+        pending: 'https://tu-sitio.com/pending',
+      },
+      auto_return: 'approved',
       external_reference: order_id,
     };
-  } catch (error) {
-    throw new Error(`Error al crear la preferencia de pago: ${(error as Error).message}`);
-  }
-};
 
-export const getPaymentStatus = async (paymentId: string) => {
-  const client = mercadoPagoClient.getClient();
-  try {
-    const response = await client.payment.get(Number(paymentId));
-    return response.body;
-  } catch (error) {
-    throw new Error(`Error al obtener el estado del pago: ${(error as Error).message}`);
+    return this.paymentRepository.createPayment(paymentData);
   }
-};
+}
