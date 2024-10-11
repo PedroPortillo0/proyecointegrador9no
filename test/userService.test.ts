@@ -3,8 +3,7 @@ import { User } from '../src/usuario/domain/entities/User';
 import { IUserRepository } from '../src/usuario/domain/repositories/IUserRepository';
 import { jest } from '@jest/globals';
 
-// Crear un mock manual para IUserRepository
-const mockUserRepository: IUserRepository = {
+const mockUserRepository = {
     create: jest.fn(async (user: User) => {
         return new User(123, user.uuid, user.name, user.email, user.password, user.phoneNumber);
     }),
@@ -18,7 +17,7 @@ const mockUserRepository: IUserRepository = {
         return new User(user.id, user.uuid, user.name, user.email, user.password, user.phoneNumber);
     }),
     delete: jest.fn(async (uuid: string) => {
-        return; // Simulación de la función delete, que no devuelve nada
+        return;
     }),
     findAll: jest.fn(async (page: number, limit: number) => {
         const users = [
@@ -40,6 +39,7 @@ const mockUserRepository: IUserRepository = {
         return null;
     })
 };
+
 
 describe('UserService', () => {
     it('should create a user', async () => {
