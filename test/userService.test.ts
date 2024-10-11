@@ -1,6 +1,5 @@
 import { UserService } from '../src/usuario/aplication/services/UserService';
 import { User } from '../src/usuario/domain/entities/User';
-import { IUserRepository } from '../src/usuario/domain/repositories/IUserRepository';
 import { jest } from '@jest/globals';
 
 const mockUserRepository = {
