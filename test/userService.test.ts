@@ -1,6 +1,5 @@
 import { UserService } from '../src/usuario/aplication/services/UserService';
 import { User } from '../src/usuario/domain/entities/User';
-import { jest } from '@jest/globals';
 
 const mockUserRepository = {
     create: jest.fn(async (user: User) => {
@@ -39,10 +38,14 @@ const mockUserRepository = {
     })
 };
 
-
 describe('UserService', () => {
+    let userService: UserService;
+
+    beforeEach(() => {
+        userService = new UserService(mockUserRepository);
+    });
+
     it('should create a user', async () => {
-        const userService = new UserService(mockUserRepository);
         const user = await userService.registerUser('testuser', 'test@example.com', 'password', '1234567890');
 
         expect(user).toBeDefined();
