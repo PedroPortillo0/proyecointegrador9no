@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es2016",                            /* Transpila a una versión de JavaScript compatible. */
-    "module": "commonjs",                          /* Utiliza CommonJS como sistema de módulos. */
-    "lib": ["es6"],                                /* Incluye las definiciones de ES6. */
-    "esModuleInterop": true,                       /* Mejora la interoperabilidad entre ESModules y CommonJS. */
-    "forceConsistentCasingInFileNames": true,      /* Fuerza consistencia en los nombres de archivos. */
-    "strict": true,                                /* Habilita la verificación estricta de tipos. */
-    "skipLibCheck": true,                          /* Omite la verificación de tipos en archivos `.d.ts` para mayor velocidad. */
-    "outDir": "./dist",                            /* Coloca los archivos transpilados en la carpeta `dist`. */
-    "sourceMap": true                              /* Genera archivos de mapas de fuente para depuración. */
+    "target": "es2016",
+    "module": "commonjs",
+    "lib": ["es6"],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "sourceMap": true
   },
-  "include": ["src/**/*"],                         /* Incluye todos los archivos dentro de `src`. */
-  "exclude": ["node_modules", "dist"]              /* Excluye `node_modules` y `dist` del proceso de compilación. */
+  "include": ["src/**/*", "test/**/*"],  
+  "exclude": ["node_modules", "dist"]   
 }
