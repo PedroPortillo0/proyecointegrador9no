@@ -1,6 +1,7 @@
 import { UserService } from '../src/usuario/aplication/services/UserService';
 import { User } from '../src/usuario/domain/entities/User';
 
+// Mock del repositorio de usuario
 const mockUserRepository = {
     create: jest.fn(async (user: User) => {
         return new User(123, user.uuid, user.name, user.email, user.password, user.phoneNumber);
@@ -38,9 +39,11 @@ const mockUserRepository = {
     })
 };
 
+// Pruebas de UserService
 describe('UserService', () => {
     let userService: UserService;
 
+    // Inicializa el servicio antes de cada prueba
     beforeEach(() => {
         userService = new UserService(mockUserRepository);
     });
@@ -48,6 +51,7 @@ describe('UserService', () => {
     it('should create a user', async () => {
         const user = await userService.registerUser('testuser', 'test@example.com', 'password', '1234567890');
 
+        // Verifica que el usuario fue creado correctamente
         expect(user).toBeDefined();
         expect(user.email).toBe('test@example.com');
         expect(mockUserRepository.create).toHaveBeenCalledTimes(1);
