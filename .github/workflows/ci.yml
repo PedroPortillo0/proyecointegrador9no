@@ -17,13 +17,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16'  # Usa la versión de Node.js que necesites
+          node-version: '16'
 
       - name: Install dependencies
         run: npm install
-        
-      - name: Run tests
-        run: npm test  # Asegúrate de que tengas el script "test" configurado en package.json
 
-      - name: Lint code
-        run: npm run lint  # Si tienes un linter configurado, como ESLint
+      - name: Run tests
+        run: npm test  
