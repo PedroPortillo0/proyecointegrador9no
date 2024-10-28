@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { AuthService } from '../../aplication/services/AuthService';
 import { UserService } from '../../aplication/services/UserService';
 import { UserRepository } from '../repositories/UserRepository';
-import { sendWhatsAppMessageUseCase } from '../../../WhatsApp/infrestructure/dependencies/dependencies'; 
 
 const userRepository = new UserRepository();
 const userService = new UserService(userRepository);
@@ -14,15 +13,6 @@ export class UserController {
         try {
 
             const user = await userService.registerUser(name, email, password, phoneNumber);
-
-            if (phoneNumber) {
-                try {
-                    await sendWhatsAppMessageUseCase.run(phoneNumber, '¡Bienvenido a la familia faunora! Nos alegra tenerte con nosotros.');
-                } catch (error) {
-                    console.error('Error al enviar el mensaje de bienvenida por WhatsApp:', error);
-                }
-            }
-
             return res.status(201).json(user);
         } catch (error) {
             if (error instanceof Error) {
