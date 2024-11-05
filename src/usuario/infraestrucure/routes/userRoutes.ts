@@ -23,6 +23,7 @@ const validateCreateUser = [
     handleValidationErrors
 ];
 
+
 const validateLoginUser = [
     check('email').isEmail().withMessage('Correo electrónico no válido'),
     check('password').notEmpty().withMessage('La contraseña es obligatoria'),

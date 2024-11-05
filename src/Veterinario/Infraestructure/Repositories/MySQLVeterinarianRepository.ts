@@ -5,18 +5,16 @@ import { QueryTypes } from 'sequelize';
 
 export class MySQLVeterinarianRepository implements VeterinarianRepository {
     public async create(veterinarian: Veterinarian): Promise<Veterinarian> {
-        const [result] = await db.query(
-            `INSERT INTO veterinarians (uuid, firstName, lastName, email, password, location, licenseImage, createdAt)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        await db.query(
+            `INSERT INTO veterinarians (uuid, lastName, email, password, location, createdAt)
+            VALUES (?, ?, ?, ?, ?, ?)`,
             {
                 replacements: [
                     veterinarian.uuid,
-                    veterinarian.firstName,
                     veterinarian.lastName,
                     veterinarian.email,
                     veterinarian.password,
                     veterinarian.location,
-                    veterinarian.licenseImage,
                     veterinarian.createdAt || new Date(),
                 ],
                 type: QueryTypes.INSERT,
@@ -41,12 +39,10 @@ export class MySQLVeterinarianRepository implements VeterinarianRepository {
         return new Veterinarian(
             vet.id,
             vet.uuid,
-            vet.firstName,
             vet.lastName,
             vet.email,
             vet.password,
             vet.location,
-            vet.licenseImage,
             vet.createdAt
         );
     }
@@ -67,12 +63,10 @@ export class MySQLVeterinarianRepository implements VeterinarianRepository {
         return new Veterinarian(
             vet.id,
             vet.uuid,
-            vet.firstName,
             vet.lastName,
             vet.email,
             vet.password,
             vet.location,
-            vet.licenseImage,
             vet.createdAt
         );
     }
@@ -97,32 +91,28 @@ export class MySQLVeterinarianRepository implements VeterinarianRepository {
             new Veterinarian(
                 vet.id,
                 vet.uuid,
-                vet.firstName,
                 vet.lastName,
                 vet.email,
                 vet.password,
                 vet.location,
-                vet.licenseImage,
                 vet.createdAt
             )
         );
 
-        const total = (countResult as any).total;
+        const total = (countResult as any[])[0].total;
         return { veterinarians, total };
     }
 
     public async update(veterinarian: Veterinarian): Promise<Veterinarian | null> {
         await db.query(
-            `UPDATE veterinarians SET firstName = ?, lastName = ?, email = ?, password = ?, location = ?, licenseImage = ?
+            `UPDATE veterinarians SET lastName = ?, email = ?, password = ?, location = ?
             WHERE uuid = ?`,
             {
                 replacements: [
-                    veterinarian.firstName,
                     veterinarian.lastName,
                     veterinarian.email,
                     veterinarian.password,
                     veterinarian.location,
-                    veterinarian.licenseImage,
                     veterinarian.uuid,
                 ],
                 type: QueryTypes.UPDATE,

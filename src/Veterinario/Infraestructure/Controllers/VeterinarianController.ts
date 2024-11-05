@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { VeterinarianService } from '../../Application/UseCases/CreateVeterinarianUseCase';
+import multer from 'multer';
 
 export class VeterinarianController {
     private veterinarianService: VeterinarianService;
@@ -11,10 +12,7 @@ export class VeterinarianController {
     // Crear un nuevo veterinario
     public async create(req: Request, res: Response): Promise<Response> {
         try {
-            const data = {
-                ...req.body,
-                licenseImage: req.file ? req.file.buffer : undefined, // Extrae la imagen como buffer si está presente
-            };
+            const data = req.body;
             const veterinarian = await this.veterinarianService.registerVeterinarian(data);
             return res.status(201).json(veterinarian);
         } catch (error) {
@@ -22,6 +20,26 @@ export class VeterinarianController {
                 return res.status(400).json({ message: error.message });
             }
             return res.status(400).json({ message: 'An unknown error occurred' });
+        }
+    }
+
+    // Método para subir la imagen de la licencia
+    public async uploadLicenseImage(req: Request, res: Response): Promise<Response> {
+        try {
+            if (!req.file) {
+                return res.status(400).json({ message: 'No se ha subido ningún archivo' });
+            }
+            const imageBuffer = req.file.buffer;
+            const imageUrl = await this.veterinarianService.uploadLicenseImage(imageBuffer); // Método en el servicio
+            return res.status(201).json({ imageUrl });
+        } catch (error) {
+            if (error instanceof multer.MulterError) {
+                // Errores específicos de multer, como límite de tamaño de archivo
+                return res.status(400).json({ message: `Error de carga: ${error.message}` });
+            } else if (error instanceof Error) {
+                return res.status(400).json({ message: error.message });
+            }
+            return res.status(500).json({ message: 'Ocurrió un error desconocido' });
         }
     }
 
@@ -57,10 +75,7 @@ export class VeterinarianController {
     public async updateVeterinarian(req: Request, res: Response): Promise<Response> {
         try {
             const uuid = req.params.uuid;
-            const data = {
-                ...req.body,
-                licenseImage: req.file ? req.file.buffer : undefined, // Extrae la imagen como buffer si está presente
-            };
+            const data = req.body;
             const veterinarian = await this.veterinarianService.updateVeterinarian(uuid, data);
             if (!veterinarian) {
                 return res.status(404).json({ message: 'Veterinarian not found' });

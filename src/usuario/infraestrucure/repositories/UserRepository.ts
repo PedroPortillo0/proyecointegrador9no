@@ -9,8 +9,7 @@ export class UserRepository implements IUserRepository {
             uuid: user.uuid,
             name: user.name,
             email: user.email,
-            password: user.password,
-            phoneNumber: user.phoneNumber,
+            password: user.password
         });
 
         const userData = createdUser.get({ plain: true });
@@ -19,8 +18,7 @@ export class UserRepository implements IUserRepository {
             userData.uuid,
             userData.name,
             userData.email,
-            userData.password,
-            userData.phoneNumber
+            userData.password
         );
     }
 
@@ -36,8 +34,7 @@ export class UserRepository implements IUserRepository {
             userData.uuid,
             userData.name,
             userData.email,
-            userData.password,
-            userData.phoneNumber
+            userData.password,       
         );
     }
 
@@ -53,8 +50,7 @@ export class UserRepository implements IUserRepository {
             userData.uuid,
             userData.name,
             userData.email,
-            userData.password,
-            userData.phoneNumber
+            userData.password
         );
     }
 
@@ -70,8 +66,7 @@ export class UserRepository implements IUserRepository {
             userData.uuid,
             userData.name,
             userData.email,
-            userData.password,
-            userData.phoneNumber
+            userData.password
         );
     }
 
@@ -80,8 +75,7 @@ export class UserRepository implements IUserRepository {
             {
                 name: user.name,
                 email: user.email,
-                password: user.password,
-                phoneNumber: user.phoneNumber,
+                password: user.password
             },
             { where: { uuid: user.uuid } }
         );
@@ -108,8 +102,7 @@ export class UserRepository implements IUserRepository {
                 userData.uuid,
                 userData.name,
                 userData.email,
-                userData.password,
-                userData.phoneNumber
+                userData.password
             );
         });
 
