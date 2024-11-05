@@ -1,7 +1,5 @@
-// uploadMiddleware.ts
 import multer from 'multer';
 import path from 'path';
-import { Request, Response, NextFunction } from 'express';
 
 const storage = multer.memoryStorage();
 
@@ -17,18 +15,7 @@ const upload = multer({
         } else {
             cb(new Error('Solo se permiten imágenes en formato JPEG o PNG.'));
         }
-    },
-    limits: { fileSize: 2 * 1024 * 1024 } // Límite de 2 MB
+    }
 });
 
-// Middleware sin validación de VirusTotal
-const validateFileUpload = async (req: Request, res: Response, next: NextFunction) => {
-    if (!req.file) {
-        return res.status(400).json({ error: 'No se ha subido ningún archivo' });
-    }
-
-    // Omitir la validación de VirusTotal y continuar al siguiente middleware
-    next();
-};
-
-export { upload, validateFileUpload };
+export { upload };

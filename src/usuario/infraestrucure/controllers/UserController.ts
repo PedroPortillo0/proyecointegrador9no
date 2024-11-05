@@ -9,10 +9,10 @@ const authService = new AuthService(userRepository);
 
 export class UserController {
     public async createUser(req: Request, res: Response): Promise<Response> {
-        const { name, email, password, phoneNumber } = req.body;
+        const { name, email, password } = req.body;
         try {
 
-            const user = await userService.registerUser(name, email, password, phoneNumber);
+            const user = await userService.registerUser(name, email, password);
             return res.status(201).json(user);
         } catch (error) {
             if (error instanceof Error) {
@@ -52,10 +52,10 @@ export class UserController {
 
     public async updateUser(req: Request, res: Response): Promise<Response> {
         const { uuid } = req.params;
-        const { name, email, password, phoneNumber } = req.body;
+        const { name, email, password } = req.body;
     
         try {
-            const updatedUser = await userService.updateUser(uuid, { name, email, password, phoneNumber });
+            const updatedUser = await userService.updateUser(uuid, { name, email, password });
             return res.json(updatedUser);
         } catch (error) {
             if (error instanceof Error) {

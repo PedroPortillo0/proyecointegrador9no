@@ -26,11 +26,7 @@ export const UserModel = sequelize.define('User', {
     password: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-    phoneNumber: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
+    }
 }, {
     tableName: 'users', 
     timestamps: false, 
